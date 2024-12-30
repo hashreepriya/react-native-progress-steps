@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { View, ScrollView, TouchableOpacity, Text } from 'react-native';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { Button, ScrollView, View } from 'react-native';
 
 import ProgressButtons from './ProgressButtons';
 
@@ -27,62 +27,29 @@ class ProgressStep extends Component {
   };
 
   renderNextButton = () => {
-    const btnStyle = {
-      textAlign: 'center',
-      padding: 8,
-      ...this.props.nextBtnStyle
-    };
-
-    const btnTextStyle = {
-      color: '#007AFF',
-      fontSize: 18,
-      ...this.props.nextBtnTextStyle
-    };
-
-    const disabledBtnText = {
-      color: '#cdcdcd'
-    };
-
-    let textStyle = [btnTextStyle];
-    if (this.props.nextBtnDisabled) textStyle.push(disabledBtnText);
-
     return (
-      <TouchableOpacity
-        style={btnStyle}
+      <Button
+        title={this.props.activeStep === this.props.stepCount - 1 ? this.props.finishBtnText : this.props.nextBtnText}
         onPress={this.props.activeStep === this.props.stepCount - 1 ? this.onSubmit : this.onNextStep}
         disabled={this.props.nextBtnDisabled}
-      >
-        <Text style={textStyle}>
-          {this.props.activeStep === this.props.stepCount - 1 ? this.props.finishBtnText : this.props.nextBtnText}
-        </Text>
-      </TouchableOpacity>
+        color="#265CE7" // Change the button color to your desired style
+      />
     );
   };
 
   renderPreviousButton = () => {
-    const btnStyle = {
-      textAlign: 'center',
-      padding: 8,
-      ...this.props.previousBtnStyle
-    };
-
-    const btnTextStyle = {
-      color: '#007AFF',
-      fontSize: 18,
-      ...this.props.previousBtnTextStyle
-    };
-
-    const disabledBtnText = {
-      color: '#cdcdcd'
-    };
-
-    let textStyle = [btnTextStyle];
-    if (this.props.previousBtnDisabled) textStyle.push(disabledBtnText);
-
+    // Hide the Previous button when it's the first step (activeStep === 0)
+    if (this.props.activeStep === 0) {
+      return null;
+    }
+    
     return (
-      <TouchableOpacity style={btnStyle} onPress={this.onPreviousStep} disabled={this.props.previousBtnDisabled}>
-        <Text style={textStyle}>{this.props.activeStep === 0 ? '' : this.props.previousBtnText}</Text>
-      </TouchableOpacity>
+      <Button
+        title={this.props.previousBtnText}
+        onPress={this.onPreviousStep}
+        disabled={this.props.previousBtnDisabled}
+        color="#265CE7" // Change the button color to your desired style
+      />
     );
   };
 
